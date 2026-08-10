@@ -1,0 +1,24 @@
+method: scout
+model:
+  name_or_path: mistralai/Mistral-7B-Instruct-v0.3
+  max_body_tokens: 8192
+  readout_layer: -3
+  dtype: auto
+  attention_backend: sdpa
+scout:
+  chunk_size: 512
+  chunking: sentence_aware
+  sentence_splitter: en_core_web_sm
+  compression_prompt: "\nBrief summary:\""
+  prompt_anchor_tokens: 1
+  prompt_attention_scope: local
+  position_mode: continuous
+  attention_aggregation: maximum
+  selection_ratio: 1.75
+  min_tokens_per_chunk: 1
+evaluation:
+  datasets: [QMSum, 2WikiMultihopQA, SummScreenFD, NarrativeQA]
+  query_instruction: Retrieve the relevant document
+  batch_size: 1
+  query_batch_size: 16
+  output_dir: results/scout

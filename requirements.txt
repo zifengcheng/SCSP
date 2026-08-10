@@ -1,0 +1,2 @@
+# The package metadata in pyproject.toml is authoritative.
+-e .

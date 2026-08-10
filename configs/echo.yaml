@@ -1,0 +1,13 @@
+method: echo
+model:
+  name_or_path: mistralai/Mistral-7B-Instruct-v0.3
+  max_body_tokens: 8192
+  readout_layer: -1
+  dtype: auto
+  attention_backend: sdpa
+evaluation:
+  datasets: [QMSum, 2WikiMultihopQA, SummScreenFD, NarrativeQA]
+  query_instruction: Retrieve the relevant document
+  batch_size: 1
+  query_batch_size: 16
+  output_dir: results/echo
