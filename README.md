@@ -1,6 +1,6 @@
-# SCOUT
+# SCSP
 
-SCOUT builds a single embedding for a long document by using semantic
+SCSP builds a single embedding for a long document by using semantic
 compression prompts to identify informative tokens before pooling. It is
 training-free and composes with standard mean pooling, Echo, and Hierarchical
 Token Prepending (HTP).
@@ -22,7 +22,7 @@ mask semantics.
 
 ## Installation
 
-SCOUT requires Python 3.10 or newer. Install the PyTorch build appropriate for
+SCSP requires Python 3.10 or newer. Install the PyTorch build appropriate for
 your platform, then run:
 
 ```bash
@@ -45,10 +45,10 @@ the Hugging Face Hub and remains subject to each checkpoint's license.
 
 ## Quick Start
 
-Evaluate SCOUT on the datasets listed in its configuration:
+Evaluate SCSP on the datasets listed in its configuration:
 
 ```bash
-scout-eval --config configs/scout.yaml
+SCSP-eval --config configs/SCSP.yaml
 ```
 
 Run all included method configurations:
@@ -66,22 +66,22 @@ metrics, retained-token fraction, sequence statistics, and wall-clock time.
 | Configuration | Document input | Readout |
 |---|---|---|
 | `vanilla.yaml` | Original document | Real-token mean |
-| `scout.yaml` | Semantic chunks and compression prompts | SCOUT-selected mean |
+| `SCSP.yaml` | Semantic chunks and compression prompts | SCSP-selected mean |
 | `echo.yaml` | Two document copies | Second-copy mean |
-| `echo_scout.yaml` | Echo input with SCOUT prompts | Selected second-copy mean |
+| `echo_SCSP.yaml` | Echo input with SCSP prompts | Selected second-copy mean |
 | `htp.yaml` | HTP sentence blocks | Real-token mean |
-| `htp_scout.yaml` | HTP input with SCOUT prompts | Selected real-token mean |
+| `htp_SCSP.yaml` | HTP input with SCSP prompts | Selected real-token mean |
 
 Queries follow the parent encoder and do not use token selection. Echo and HTP
-inputs are constructed first; SCOUT prompts are then appended as readout-only
+inputs are constructed first; SCSP prompts are then appended as readout-only
 structures. Parent token positions and parent attention rows remain unchanged.
 
 ## Configuration
 
-Experiments are defined in YAML. The principal SCOUT fields are:
+Experiments are defined in YAML. The principal SCSP fields are:
 
 ```yaml
-scout:
+SCSP:
   chunk_size: 512
   chunking: sentence_aware
   sentence_splitter: en_core_web_sm
@@ -110,7 +110,7 @@ qrels.jsonl     {"qid": "q1", "doc_id": "d1", "score": 1}
 Register it at runtime and include its name in `evaluation.datasets`:
 
 ```bash
-scout-eval --config my_config.yaml \
+SCSP-eval --config my_config.yaml \
   --local-dataset MyTask=path/to/MyTask
 ```
 
@@ -120,9 +120,9 @@ scout-eval --config my_config.yaml \
 configs/                         Reproducible method configurations
 docs/method.md                   Equations and architectural invariants
 scripts/                         Portable evaluation entry points
-src/scout_embedding/
+src/SCSP_embedding/
   chunking.py                    Fixed and sentence-aware chunking
-  input_construction.py          SCOUT inputs and prompt isolation
+  input_construction.py          SCSP inputs and prompt isolation
   attention_scoring.py           All-layer attention collection and scoring
   token_selection.py             Attention-threshold selection rules
   selective_pooling.py           Masked mean pooling and normalization
